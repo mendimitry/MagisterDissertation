@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ServerPing.Server">
+    <Position X="2" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIgAACgAAAAMAQAAAAAAAgAAAgAhMAEIAQAIBAAAAEA=</HashCode>
+      <FileName>Server.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Server.FormAuth">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAQAACAAABAAAACAAAACAAAIAAAAEEAAAAAAAAA=</HashCode>
+      <FileName>FormAuth.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

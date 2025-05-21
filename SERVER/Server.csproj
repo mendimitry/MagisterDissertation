@@ -139,6 +139,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Test1.cs" />
     <Compile Include="FormAuth.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -170,7 +171,7 @@
     <None Include="App.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram3.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

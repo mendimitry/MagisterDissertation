@@ -60,7 +60,7 @@ namespace ServerPing
 
             if (MessageBox.Show("Запустить ПО Мониторинга? Если согласны, то будет запущен bot Telegram", "Ожидание команды", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-               
+
             }
             else
             {
@@ -88,7 +88,7 @@ namespace ServerPing
                 receiverOptions,
                 cancellationToken
             );
-            
+
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -572,7 +572,7 @@ namespace ServerPing
                                     await botClient.SendTextMessageAsync(message.Chat, (string.Format("Наименование: {0}", queryObj["Name"], queryObj["ProcessorId"])), cancellationToken: cancellationToken);
                                     await botClient.SendTextMessageAsync(message.Chat, (string.Format("Число ядер: {0}", queryObj["NumberOfCores"])), cancellationToken: cancellationToken);
                                     await botClient.SendTextMessageAsync(message.Chat, (string.Format("ProcessorId: {0}", queryObj["ProcessorId"])), cancellationToken: cancellationToken);
-                                    
+
 
                                 }
 
@@ -593,7 +593,7 @@ namespace ServerPing
                             }
 
 
-                           
+
                         }
                     }
 
@@ -654,6 +654,8 @@ namespace ServerPing
 
 
         }
+
+
 
     }
 }
