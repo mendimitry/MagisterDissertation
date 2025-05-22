@@ -51,7 +51,7 @@ namespace Server
             chart1.ChartAreas[0].AxisX.LabelStyle.Format = "H:mm:ss";
             chart1.Series[0].XValueType = ChartValueType.DateTime;
             chart1.ChartAreas[0].AxisX.Minimum = DateTime.Now.ToOADate();
-            chart1.ChartAreas[0].AxisX.Maximum = DateTime.Now.AddMinutes(0.2).ToOADate();
+            chart1.ChartAreas[0].AxisX.Maximum = DateTime.Now.AddMinutes(0.5).ToOADate();
             chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Seconds;
             chart1.ChartAreas[0].AxisX.Interval = 10;
 
@@ -59,11 +59,16 @@ namespace Server
             chart5.ChartAreas[0].AxisX.LabelStyle.Format = "H:mm:ss";
             chart5.Series[0].XValueType = ChartValueType.DateTime;
             chart5.ChartAreas[0].AxisX.Minimum = DateTime.Now.ToOADate();
-            chart5.ChartAreas[0].AxisX.Maximum = DateTime.Now.AddMinutes(0.2).ToOADate();
+            chart5.ChartAreas[0].AxisX.Maximum = DateTime.Now.AddMinutes(0.5).ToOADate();
             chart5.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Seconds;
-            chart5.ChartAreas[0].AxisX.Interval = 5;
+            chart5.ChartAreas[0].AxisX.Interval = 10;
 
-        
+            chart2.ChartAreas[0].AxisX.LabelStyle.Format = "H:mm:ss";
+            chart2.Series[0].XValueType = ChartValueType.DateTime;
+            chart2.ChartAreas[0].AxisX.Minimum = DateTime.Now.ToOADate();
+            chart2.ChartAreas[0].AxisX.Maximum = DateTime.Now.AddMinutes(0.5).ToOADate();
+            chart2.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Seconds;
+            chart2.ChartAreas[0].AxisX.Interval = 10;
 
             Application.DoEvents();
 
@@ -186,6 +191,17 @@ namespace Server
             udpStat11 = properties.GetUdpIPv4Statistics();
 
             UdpStatistics tcpstat = properties.GetUdpIPv4Statistics();
+            string Host = System.Net.Dns.GetHostName();
+            string IP = System.Net.Dns.GetHostByName(Host).AddressList[0].ToString();
+            StringBuilder sb = new StringBuilder();
+            Ping pingSender0 = new Ping();
+            PingReply reply0 = pingSender0.Send("8.8.8.8");
+            Ping pingSender1 = new Ping();
+            PingReply reply1 = pingSender1.Send("1.1.1.1");
+            Ping pingSender2 = new Ping();
+            PingReply reply2 = pingSender2.Send("www.google.com");
+            Ping pingSender3 = new Ping();
+            PingReply reply3 = pingSender3.Send(IP);
             //reply.RoundtripTime.ToString(), reply.RoundtripTime, reply.Options.Ttl, reply.Buffer.Length
             chart1.Series[0].Points.AddXY(timeNow, tcpstat.DatagramsReceived);
             chart1.Series[1].Points.AddXY(timeNow, tcpstat.DatagramsSent);
@@ -196,6 +212,12 @@ namespace Server
             chart5.Series[1].Points.AddXY(timeNow, udpStat11.UdpListeners);
 
 
+            chart2.Series[0].Points.AddXY(timeNow, reply0.RoundtripTime);
+            chart2.Series[1].Points.AddXY(timeNow, reply2.RoundtripTime);
+
+           
+
+            
 
             fdfs.Add(new P((int)tanTemp, timeNow));
             _countSeconds++;
@@ -204,19 +226,22 @@ namespace Server
             {
                 _countSeconds = 0;
                 chart1.ChartAreas[0].AxisX.Minimum = DateTime.Now.ToOADate();
-                chart1.ChartAreas[0].AxisX.Maximum = DateTime.Now.AddMinutes(0.1).ToOADate();
+                chart1.ChartAreas[0].AxisX.Maximum = DateTime.Now.AddMinutes(0.2).ToOADate();
                 chart1.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Seconds;
-                chart1.ChartAreas[0].AxisX.Interval = 6;
+                chart1.ChartAreas[0].AxisX.Interval = 9;
 
               
 
                 chart5.ChartAreas[0].AxisX.Minimum = DateTime.Now.ToOADate();
-                chart5.ChartAreas[0].AxisX.Maximum = DateTime.Now.AddMinutes(0.1).ToOADate();
+                chart5.ChartAreas[0].AxisX.Maximum = DateTime.Now.AddMinutes(0.2).ToOADate();
                 chart5.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Seconds;
-                chart5.ChartAreas[0].AxisX.Interval = 6;
+                chart5.ChartAreas[0].AxisX.Interval = 9;
 
-                
 
+                chart2.ChartAreas[0].AxisX.Minimum = DateTime.Now.ToOADate();
+                chart2.ChartAreas[0].AxisX.Maximum = DateTime.Now.AddMinutes(0.2).ToOADate();
+                chart2.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Seconds;
+                chart2.ChartAreas[0].AxisX.Interval = 9;
 
 
 
@@ -339,17 +364,16 @@ new ManagementObjectSearcher("root\\WMI",
 
             foreach (ManagementObject queryObj in searcher8.Get())
             {
-                foreach (ManagementObject queryObj1 in searcher9.Get())
-                {
+                
                     sb.AppendLine(string.Format("Наименование: {0}", queryObj["Name"], queryObj["ProcessorId"]));
                     sb.AppendLine(string.Format("Число ядер: {0}", queryObj["NumberOfCores"]));
                     sb.AppendLine(string.Format("ProcessorId: {0}", queryObj["ProcessorId"]));
 
-                    sb.AppendLine(string.Format("Температура: {0}", Convert.ToDouble(queryObj1["CurrentTemperature"]) - 273));
+                   // sb.AppendLine(string.Format("Температура: {0}", Convert.ToDouble(queryObj1["CurrentTemperature"]) - 273));
 
                
                     textBox2.Text = sb.ToString();
-                }
+                
         }
         }
 
@@ -442,6 +466,43 @@ new ManagementObjectSearcher("root\\WMI",
 
 
             
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            string Host = System.Net.Dns.GetHostName();
+            string IP = System.Net.Dns.GetHostByName(Host).AddressList[0].ToString();
+            StringBuilder sb = new StringBuilder();
+            Ping pingSender0 = new Ping();
+            PingReply reply0 = pingSender0.Send("8.8.8.8");
+            Ping pingSender1 = new Ping();
+            PingReply reply1 = pingSender1.Send("1.1.1.1");
+            Ping pingSender2 = new Ping();
+            PingReply reply2 = pingSender2.Send("www.google.com");
+            Ping pingSender3 = new Ping();
+            PingReply reply3 = pingSender3.Send(IP);
+
+            if (reply0.Status == IPStatus.Success)
+            {
+                if (reply1.Status == IPStatus.Success)
+                {
+                    if (reply2.Status == IPStatus.Success)
+                    {
+                        sb.AppendLine(string.Format($"Ping успешен. \t\n Задержка Google DNS: {reply0.RoundtripTime}ms"));
+                        sb.AppendLine(string.Format($"Ping успешен. \t\n Задержка Cloudflare: {reply1.RoundtripTime}ms"));
+                        sb.AppendLine(string.Format($"Ping успешен. \t\n Задержка Google.com: {reply2.RoundtripTime}ms"));
+                        sb.AppendLine(string.Format($"Ping успешен. \t\n Задержка до сервера мониторинга {IP} : {reply3.RoundtripTime}ms"));
+                        textBox2.Text = sb.ToString();
+                    }
+                }
+            }
+            else
+            {
+                sb.AppendLine(string.Format($"Ping неудачен. Error: {reply0.Status}"));
+                textBox2.Text = sb.ToString();
+            }
+
+      
         }
     }
     }
